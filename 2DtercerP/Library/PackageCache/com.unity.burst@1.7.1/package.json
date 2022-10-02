@@ -1,0 +1,21 @@
+{
+  "name": "com.unity.burst",
+  "displayName": "Burst",
+  "version": "1.7.1",
+  "unity": "2019.4",
+  "description": "Burst is a compiler that translates from IL/.NET bytecode to highly optimized native code using LLVM.",
+  "dependencies": {
+    "com.unity.mathematics": "1.2.1"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/burst.git",
+    "type": "git",
+    "revision": "61a801e91b00a608cc94c3c39187f577dd72df2c"
+  },
+  "upm": {
+    "changelog": "### Fixed\n- Fixed errors when working with paths containing special characters\n- Fixed a bug where if you used `FloatMode.Fast` with `math.pow`, where the `y` argument to `math.pow` was actually sourced from an integer, illegal codegen would be generated (LLVM would try and call out to `powf` from the cstdlib).\n- Right pane vertical scrollbar not always showing correctly.\n- Fixed another rare case of the file-is-locked bug where the Burst IL Post Processor could incorrectly hold a file lock on a pdb.\n- Fixed a bug when calling profiling `CreateMarker` on iOS, Burst could fail at runtime saying it was unable to find `CreateMarker__Unmanaged`.\n- Fixed a bug where using `ReinterpretStore(someIndex, (ushort)someValue)` could cause an internal compiler error in Burst.\n- A potential issue with the debug info mover pass, that meant it only affected the first entry point in a module\n- Fixed a potential deadlock whereby if Burst was compiling in the background (the background tasks window showed Burst in it) and a user switched from release to debug in the editor, Burst could cause a deadlock.\n- Fixed a bug where if you had synchronous compilation on a job, disabled Burst compilation and entered playmode, then exited playmode, and finally re-enabled Burst compilation, a hang could occur.\n- Fixed a memory leak where during hashing we'd pin a GC object and never unpin and free it.\n- Fixed a bug where toggling Burst enable <-> disable during a playmode execution using Burst, and then attaching the managed debugger, could cause an editor crash.\n- Inspector font style changing when entering and exiting play mode.\n- Fixed a super rare hashing bug in Burst whereby it was possible that the Burst Hash Cache for a given assembly was out of sync with the Assembly Loader cache.\n- Fixed hashing error that could occur with unbound generic type\n- Fixed a super rare bug where Burst could hit an internal error with `System.InvalidOperationException: Nullable object must have a value`.\n\n### Changed\n- Made Burst explicitly check for any compilation requests that came from `AssemblyBuilder`, and do not compile these with Burst. These exist outside the normal compilation pipeline, and Burst could not support them (but we now explicitly check for that case).\n- Made Burst's ILPP 22% faster by caching dependent assemblies that the being-processed assembly uses.\n\n### Removed\n- Removed the requirement that `BurstLoader` has to initialize `BurstReflection` during a domain reload, making `BurstLoader` setup 2x faster during domain reloads.\n\n### Added\n\n### Known Issues"
+  },
+  "upmCi": {
+    "footprint": "f693ebcabc3e51421590c6eb5c6bfe7ff3667f3c"
+  }
+}
